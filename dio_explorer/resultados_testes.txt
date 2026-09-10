@@ -1,0 +1,184 @@
+================================================================================
+  RELATÓRIO DE TESTES UNITÁRIOS — DIO Explorer
+  Comandos: /trilha (Java) | /desafio | /certificado
+  Data de execução: 2025-07-11
+  Framework: Jest 29 / Node.js 24
+================================================================================
+
+SUITE: src/dioCommands.test.js
+--------------------------------------------------------------------------------
+
+  normalizar()
+    ✓ converte para minúsculas
+    ✓ remove acento agudo
+    ✓ remove cedilha
+    ✓ string vazia permanece vazia
+    ✓ texto sem acentos permanece igual (minúsculo)
+    ✓ remove múltiplos acentos
+    ✓ normaliza ã
+    ✓ normaliza é
+
+  buscarTrilhas() — /trilha java
+    ✓ encontra Java com maiúscula exata
+    ✓ encontra java com minúscula (case-insensitive)
+    ✓ encontra JAVA com todas maiúsculas
+    ✓ encontra JaVa com caixa mista
+    ✓ retorna vazio para tecnologia inexistente
+    ✓ retorna vazio para catálogo vazio
+    ✓ encontra Python
+    ✓ não busca no campo nome — 'Full Stack' retorna vazio
+    ✓ busca parcial 'va' contida em 'Java'
+    ✓ retorna vazio para COBOL
+
+  listarTecnologiasDisponiveis()
+    ✓ retorna um array
+    ✓ contém Java
+    ✓ contém Python
+    ✓ sem duplicatas
+    ✓ resultado ordenado alfabeticamente
+    ✓ catálogo vazio retorna []
+
+  formatarTrilha()
+    ✓ contém o nome da trilha
+    ✓ contém a tecnologia
+    ✓ contém o nível
+    ✓ contém XP total
+    ✓ acesso vitalício = Sim
+    ✓ acesso vitalício = Não quando false
+    ✓ contém todas as badges
+    ✓ exibe promoção ativa com % e cupom
+    ✓ exibe mensagem quando sem promoção
+    ✓ lista lives ao vivo
+    ✓ mensagem quando sem lives
+    ✓ contém número de módulos
+
+  comandoTrilha() — integração /trilha
+    ✓ Java encontrado
+    ✓ java minúsculo encontrado
+    ✓ tecnologia inexistente exibe aviso
+    ✓ tecnologia inexistente lista as disponíveis
+    ✓ múltiplas trilhas têm separador ---
+    ✓ end-to-end com arquivo real: Java encontrado
+    ✓ end-to-end com arquivo real: tecnologia inexistente lista opções
+
+  normalizarNivel()
+    ✓ iniciante → Iniciante
+    ✓ Iniciante maiúsculo → Iniciante
+    ✓ intermediario sem acento → Intermediário
+    ✓ intermediário com acento → Intermediário
+    ✓ avancado sem acento → Avançado
+    ✓ avançado com acento → Avançado
+    ✓ nível inválido → null
+    ✓ string vazia → null
+    ✓ número como string → null
+
+  gerarTemplateCodigo()
+    ✓ Java gera public class
+    ✓ Java gera método main
+    ✓ Java gera TODO
+    ✓ JAVA maiúsculo também gera public class (case-insensitive)
+    ✓ Python gera def
+    ✓ Python gera pass
+    ✓ tecnologia genérica gera TODO
+
+  gerarDesafio() — /desafio
+    ✓ desafio Java Iniciante contém Java
+    ✓ desafio Java Iniciante contém Iniciante
+    ✓ desafio Java Intermediário exibe nível correto
+    ✓ desafio Java Avançado exibe nível correto
+    ✓ nível inválido retorna mensagem não reconhecido
+    ✓ nível inválido sugere as opções válidas
+    ✓ contém seção Descrição (emoji 📋)
+    ✓ contém seção Objetivo (emoji 🎯)
+    ✓ contém seção Entrada (emoji 📥)
+    ✓ contém seção Saída (emoji 📤)
+    ✓ contém seção Restrições (emoji 📌)
+    ✓ contém seção Dica (emoji 💡)
+    ✓ contém seção Template (emoji 🧩)
+    ✓ template Java contém public class
+    ✓ nível com acento funciona: avançado
+
+  gerarCodigoVerificacao()
+    ✓ começa com DIO-
+    ✓ segue o padrão DIO-XXXX-XXXX-XXXX
+    ✓ tem exatamente 18 caracteres (DIO-XXXX-XXXX-XXXX)
+    ✓ gera códigos diferentes em chamadas consecutivas (alta prob.)
+
+  dataEmissaoPtBR()
+    ✓ contém ' de '
+    ✓ contém o ano atual
+    ✓ contém nome de mês em português
+    ✓ data específica: 1 de janeiro de 2025
+    ✓ data específica: 15 de julho de 2024
+    ✓ data específica: 31 de dezembro de 2025
+
+  gerarCertificado() — /certificado
+    ✓ contém o nome do aluno
+    ✓ encontra trilha Java e exibe nome completo
+    ✓ exibe tecnologia correta
+    ✓ exibe nível correto
+    ✓ exibe XP total correto
+    ✓ contém todas as badges da trilha Java
+    ✓ contém o código de verificação fornecido
+    ✓ contém data de emissão com ' de '
+    ✓ contém link dio.me
+    ✓ trilha não encontrada usa dados do usuário
+    ✓ trilha não encontrada: XP = 0
+    ✓ código gerado automaticamente quando não fornecido
+    ✓ busca por tecnologia (não só por nome da trilha)
+    ✓ end-to-end com arquivo real: Java
+    ✓ certificado contém cabeçalho CERTIFICADO DE CONCLUSÃO
+
+  carregarTrilhas()
+    ✓ carrega o arquivo real e retorna array
+    ✓ trilhas possuem campo tecnologia
+    ✓ trilhas possuem campo xp_total
+    ✓ Java está presente no catálogo real
+    ✓ carrega arquivo customizado via tmp
+
+  Fluxo completo do aluno — Java
+    ✓ /trilha java retorna a trilha correta
+    ✓ /trilha java exibe badges
+    ✓ /trilha java exibe promoção ativa
+    ✓ /desafio java intermediario gera conteúdo correto
+    ✓ /desafio java intermediario contém todas as seções
+    ✓ /certificado emite com nome do aluno
+    ✓ /certificado exibe XP correto do arquivo real
+    ✓ /certificado badges corretas do arquivo real
+    ✓ /certificado código de verificação no formato correto
+
+--------------------------------------------------------------------------------
+
+COBERTURA DE CÓDIGO
+--------------------------------------------------------------------------------
+
+Arquivo         | Statements | Branches  | Functions | Lines     | Linhas descobertas
+----------------|------------|-----------|-----------|-----------|-------------------
+dioCommands.js  |  100%      |  96.29%   |  100%     |  100%     | 19
+----------------|------------|-----------|-----------|-----------|-------------------
+
+Resumo de cobertura:
+  Statements : 100%  (64/64)
+  Branches   :  96%  (26/27)
+  Functions  : 100%  (21/21)
+  Lines      : 100%  (58/58)
+
+--------------------------------------------------------------------------------
+
+RESULTADO FINAL
+--------------------------------------------------------------------------------
+
+  Test Suites : 1 passed,  1 total
+  Tests       : 113 passed, 113 total   [ APROVADOS: 113/113 — 100% ]
+  Snapshots   : 0 total
+  Tempo       : ~0.7 s
+
+  META DE COBERTURA (>= 70%): ATINGIDA ✓
+    Statements : 100% ≥ 70% ✓
+    Branches   :  96% ≥ 70% ✓
+    Functions  : 100% ≥ 70% ✓
+    Lines      : 100% ≥ 70% ✓
+
+================================================================================
+  Todos os testes passaram. Cobertura muito acima da meta de 70%.
+================================================================================

@@ -1,0 +1,15 @@
+# Dependências
+node_modules/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Cache de progresso
+data/cache-progresso/
+
+# Certificados gerados
+docs/certificados-emitidos/
+
+# Arquivos temporários
+*.tmp

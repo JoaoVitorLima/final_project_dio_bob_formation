@@ -1,0 +1,30 @@
+{
+  "name": "dio-explorer-tests",
+  "version": "1.0.0",
+  "description": "Testes unitários DIO Explorer — /trilha, /desafio, /certificado",
+  "main": "src/dioCommands.js",
+  "scripts": {
+    "test": "jest --coverage --coverageDirectory=coverage --coverageReporters=text --coverageReporters=text-summary",
+    "test:verbose": "jest --verbose --coverage --coverageDirectory=coverage --coverageReporters=text --coverageReporters=text-summary"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/src/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src/dioCommands.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 70,
+        "functions": 70,
+        "branches": 70,
+        "statements": 70
+      }
+    }
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
