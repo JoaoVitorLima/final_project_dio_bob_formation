@@ -19,6 +19,8 @@ const {
   comandoTrilha,
   normalizarNivel,
   gerarTemplateCodigo,
+  BANCO_DESAFIOS,
+  sortearDesafio,
   gerarDesafio,
   gerarCodigoVerificacao,
   dataEmissaoPtBR,
@@ -330,6 +332,91 @@ describe("gerarTemplateCodigo()", () => {
   test("tecnologia genérica gera TODO", () => {
     expect(gerarTemplateCodigo("Rust", "Avançado")).toContain("TODO");
   });
+  // Novas tecnologias
+  test("JavaScript NÃO gera public class (não confunde com Java)", () => {
+    expect(gerarTemplateCodigo("JavaScript", "Iniciante")).not.toContain("public class");
+  });
+  test("JavaScript gera bloco javascript", () => {
+    expect(gerarTemplateCodigo("JavaScript", "Iniciante")).toContain("```javascript");
+  });
+  test("JavaScript gera function solucao", () => {
+    expect(gerarTemplateCodigo("JavaScript", "Iniciante")).toContain("function solucao");
+  });
+  test("TypeScript gera bloco typescript", () => {
+    expect(gerarTemplateCodigo("TypeScript", "Iniciante")).toContain("```typescript");
+  });
+  test("TypeScript gera assinatura tipada", () => {
+    expect(gerarTemplateCodigo("TypeScript", "Intermediário")).toContain("unknown");
+  });
+  test("React gera bloco tsx", () => {
+    expect(gerarTemplateCodigo("React", "Iniciante")).toContain("```tsx");
+  });
+  test("React gera import React", () => {
+    expect(gerarTemplateCodigo("React", "Intermediário")).toContain("import React");
+  });
+  test("Node.js gera use strict", () => {
+    expect(gerarTemplateCodigo("Node.js", "Iniciante")).toContain("'use strict'");
+  });
+  test("Node.js gera module.exports", () => {
+    expect(gerarTemplateCodigo("Node.js", "Intermediário")).toContain("module.exports");
+  });
+  test("SQL gera SELECT", () => {
+    expect(gerarTemplateCodigo("SQL", "Iniciante")).toContain("SELECT");
+  });
+  test("SQL gera bloco sql", () => {
+    expect(gerarTemplateCodigo("SQL", "Intermediário")).toContain("```sql");
+  });
+});
+
+// ===========================================================================
+// 7b. sortearDesafio
+// ===========================================================================
+
+describe("sortearDesafio()", () => {
+  test("retorna desafio para Java Iniciante", () => {
+    const d = sortearDesafio("Java", "Iniciante");
+    expect(d).not.toBeNull();
+    expect(d).toHaveProperty("descricao");
+    expect(d).toHaveProperty("objetivos");
+    expect(d).toHaveProperty("entrada");
+    expect(d).toHaveProperty("saida");
+    expect(d).toHaveProperty("restricoes");
+    expect(d).toHaveProperty("dica");
+  });
+  test("retorna desafio para Python Iniciante", () => {
+    expect(sortearDesafio("Python", "Iniciante")).not.toBeNull();
+  });
+  test("retorna desafio para JavaScript Intermediário", () => {
+    expect(sortearDesafio("JavaScript", "Intermediário")).not.toBeNull();
+  });
+  test("retorna desafio para TypeScript Avançado", () => {
+    expect(sortearDesafio("TypeScript", "Avançado")).not.toBeNull();
+  });
+  test("retorna desafio para React Iniciante", () => {
+    expect(sortearDesafio("React", "Iniciante")).not.toBeNull();
+  });
+  test("retorna desafio para Node.js Intermediário", () => {
+    expect(sortearDesafio("Node.js", "Intermediário")).not.toBeNull();
+  });
+  test("retorna desafio para SQL Avançado", () => {
+    expect(sortearDesafio("SQL", "Avançado")).not.toBeNull();
+  });
+  test("retorna null para tecnologia não cadastrada", () => {
+    expect(sortearDesafio("Rust", "Iniciante")).toBeNull();
+  });
+  test("busca é case-insensitive: 'javascript' encontra 'javascript:Iniciante'", () => {
+    expect(sortearDesafio("javascript", "Iniciante")).not.toBeNull();
+  });
+  test("desafio Java tem pelo menos 1 objetivo", () => {
+    const d = sortearDesafio("Java", "Iniciante");
+    expect(d.objetivos.length).toBeGreaterThanOrEqual(1);
+  });
+  test("BANCO_DESAFIOS exportado é um objeto", () => {
+    expect(typeof BANCO_DESAFIOS).toBe("object");
+  });
+  test("BANCO_DESAFIOS contém java:Iniciante", () => {
+    expect(BANCO_DESAFIOS["java:Iniciante"]).toBeDefined();
+  });
 });
 
 // ===========================================================================
@@ -610,5 +697,53 @@ describe("Fluxo completo do aluno — Java", () => {
   test("/certificado código de verificação no formato correto", () => {
     const saida = gerarCertificado(ALUNO, "Java", trilhasReais);
     expect(saida).toMatch(/DIO-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
+  });
+  
+  // ===========================================================================
+  // Desafios de novas tecnologias — integração gerarDesafio()
+  // ===========================================================================
+  
+  describe("gerarDesafio() — novas tecnologias", () => {
+    test("JavaScript Iniciante contém JavaScript e Iniciante", () => {
+      const saida = gerarDesafio("JavaScript", "iniciante");
+      expect(saida).toContain("JavaScript");
+      expect(saida).toContain("Iniciante");
+    });
+    test("JavaScript Iniciante tem template ```javascript", () => {
+      expect(gerarDesafio("JavaScript", "iniciante")).toContain("```javascript");
+    });
+    test("JavaScript Intermediário contém descricao real do banco (não genérica)", () => {
+      const saida = gerarDesafio("JavaScript", "intermediario");
+      // A descricao genérica seria "Implemente uma solução em JavaScript" — o banco tem conteúdo específico
+      expect(saida).not.toContain("para o problema proposto no nível");
+    });
+    test("TypeScript Iniciante contém TypeScript e Iniciante", () => {
+      const saida = gerarDesafio("TypeScript", "iniciante");
+      expect(saida).toContain("TypeScript");
+      expect(saida).toContain("Iniciante");
+    });
+    test("TypeScript Iniciante tem template ```typescript", () => {
+      expect(gerarDesafio("TypeScript", "iniciante")).toContain("```typescript");
+    });
+    test("React Iniciante tem template ```tsx", () => {
+      expect(gerarDesafio("React", "iniciante")).toContain("```tsx");
+    });
+    test("Node.js Iniciante tem template com use strict", () => {
+      expect(gerarDesafio("Node.js", "iniciante")).toContain("use strict");
+    });
+    test("SQL Iniciante tem template ```sql", () => {
+      expect(gerarDesafio("SQL", "iniciante")).toContain("```sql");
+    });
+    test("Rust (sem banco) usa fallback genérico", () => {
+      const saida = gerarDesafio("Rust", "iniciante");
+      expect(saida).toContain("Rust");
+      expect(saida).toContain("Iniciante");
+      // fallback genérico sempre presente
+      expect(saida).toContain("📋");
+    });
+    test("todas as seções presentes para JavaScript", () => {
+      const saida = gerarDesafio("JavaScript", "intermediario");
+      ["📋","🎯","📥","📤","📌","💡","🧩"].forEach(e => expect(saida).toContain(e));
+    });
   });
 });

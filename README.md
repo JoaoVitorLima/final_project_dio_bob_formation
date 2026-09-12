@@ -182,4 +182,31 @@ Consulte o [Guia Completo](dio_explorer/docs/GUIA_COMPLETO.md) para insights det
 
 ---
 
+## ✨ Melhorias Realizadas
+
+Estas melhorias foram implementadas além do escopo mínimo do desafio:
+
+| # | Melhoria | Detalhe |
+|---|---|---|
+| 1 | **Banco de desafios variados** | `gerarDesafio()` sorteia aleatoriamente entre múltiplos problemas reais por `(tecnologia, nível)`, em vez de gerar sempre o mesmo texto genérico |
+| 2 | **Templates de código expandidos** | `gerarTemplateCodigo()` agora cobre JavaScript, TypeScript, React, Node.js e SQL, além de Java e Python |
+| 3 | **Dupla implementação (JS + Python)** | Toda a lógica de negócio existe em [`src/dioCommands.js`](dio_explorer/src/dioCommands.js) e [`src/dio_commands.py`](dio_explorer/src/dio_commands.py) |
+| 4 | **113 testes unitários** | Cobertura de 100% em statements, funções e linhas (96% em branches) |
+| 5 | **Servidor MCP completo** | Suporte a stdio, HTTP e HTTP com autenticação por API key |
+| 6 | **JSON rico** | Trilhas com promoções, cupons, badges, lives ao vivo e acesso vitalício |
+| 7 | **Busca inteligente** | Case-insensitive + normalização de acentos em todos os comandos |
+| 8 | **Guia Completo** | [`docs/GUIA_COMPLETO.md`](dio_explorer/docs/GUIA_COMPLETO.md) com todos os prompts usados e arquitetura detalhada |
+
+---
+
+## O que aprendi
+
+- **Prompt Engineering é engenharia de software**: um prompt bem estruturado com exemplos, restrições e formato de saída definido se comporta como uma especificação funcional.
+- **Separe o prompt da lógica de negócio**: os slash commands (`.bob/commands/`) definem *o quê* mostrar; `dioCommands.js` define *como* calcular — testável de forma determinística.
+- **MCP conecta ferramentas de IA**: o protocolo MCP permite que qualquer agente compatível consuma as mesmas ferramentas, tornando o projeto extensível além do Bob.
+- **Testes são a rede de segurança ao iterar com IA**: com 113 testes, cada iteração de prompt ou código pode ser validada em menos de 1 segundo.
+- **Dados são o produto**: o `trilhas_dio.json` é o coração do projeto — enriquecê-lo melhora todos os três comandos de uma vez.
+
+---
+
 *Projeto construído com ❤️ durante a Formação IBM Bob na DIO.*
