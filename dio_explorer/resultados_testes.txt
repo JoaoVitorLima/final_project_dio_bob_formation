@@ -1,7 +1,7 @@
 ================================================================================
   RELATÓRIO DE TESTES UNITÁRIOS — DIO Explorer
-  Comandos: /trilha (Java) | /desafio | /certificado
-  Data de execução: 2025-07-11
+  Comandos: /trilha | /desafio | /certificado
+  Data de execução: 2025-07-14
   Framework: Jest 29 / Node.js 24
 ================================================================================
 
@@ -80,6 +80,31 @@ SUITE: src/dioCommands.test.js
     ✓ Python gera def
     ✓ Python gera pass
     ✓ tecnologia genérica gera TODO
+    ✓ JavaScript NÃO gera public class (não confunde com Java)
+    ✓ JavaScript gera bloco javascript
+    ✓ JavaScript gera function solucao
+    ✓ TypeScript gera bloco typescript
+    ✓ TypeScript gera assinatura tipada
+    ✓ React gera bloco tsx
+    ✓ React gera import React
+    ✓ Node.js gera use strict
+    ✓ Node.js gera module.exports
+    ✓ SQL gera SELECT
+    ✓ SQL gera bloco sql
+
+  sortearDesafio()
+    ✓ retorna desafio para Java Iniciante
+    ✓ retorna desafio para Python Iniciante
+    ✓ retorna desafio para JavaScript Intermediário
+    ✓ retorna desafio para TypeScript Avançado
+    ✓ retorna desafio para React Iniciante
+    ✓ retorna desafio para Node.js Intermediário
+    ✓ retorna desafio para SQL Avançado
+    ✓ retorna null para tecnologia não cadastrada
+    ✓ busca é case-insensitive: 'javascript' encontra 'javascript:Iniciante'
+    ✓ desafio Java tem pelo menos 1 objetivo
+    ✓ BANCO_DESAFIOS exportado é um objeto
+    ✓ BANCO_DESAFIOS contém java:Iniciante
 
   gerarDesafio() — /desafio
     ✓ desafio Java Iniciante contém Java
@@ -147,6 +172,18 @@ SUITE: src/dioCommands.test.js
     ✓ /certificado badges corretas do arquivo real
     ✓ /certificado código de verificação no formato correto
 
+  gerarDesafio() — novas tecnologias
+    ✓ JavaScript Iniciante contém JavaScript e Iniciante
+    ✓ JavaScript Iniciante tem template ```javascript
+    ✓ JavaScript Intermediário contém descricao real do banco (não genérica)
+    ✓ TypeScript Iniciante contém TypeScript e Iniciante
+    ✓ TypeScript Iniciante tem template ```typescript
+    ✓ React Iniciante tem template ```tsx
+    ✓ Node.js Iniciante tem template com use strict
+    ✓ SQL Iniciante tem template ```sql
+    ✓ Rust (sem banco) usa fallback genérico
+    ✓ todas as seções presentes para JavaScript
+
 --------------------------------------------------------------------------------
 
 COBERTURA DE CÓDIGO
@@ -154,14 +191,14 @@ COBERTURA DE CÓDIGO
 
 Arquivo         | Statements | Branches  | Functions | Lines     | Linhas descobertas
 ----------------|------------|-----------|-----------|-----------|-------------------
-dioCommands.js  |  100%      |  96.29%   |  100%     |  100%     | 19
+dioCommands.js  |  100%      |  98.36%   |  100%     |  100%     | 19
 ----------------|------------|-----------|-----------|-----------|-------------------
 
 Resumo de cobertura:
-  Statements : 100%  (64/64)
-  Branches   :  96%  (26/27)
-  Functions  : 100%  (21/21)
-  Lines      : 100%  (58/58)
+  Statements : 100%  (93/93)
+  Branches   :  98%  (60/61)
+  Functions  : 100%  (24/24)
+  Lines      : 100%  (84/84)
 
 --------------------------------------------------------------------------------
 
@@ -169,13 +206,13 @@ RESULTADO FINAL
 --------------------------------------------------------------------------------
 
   Test Suites : 1 passed,  1 total
-  Tests       : 113 passed, 113 total   [ APROVADOS: 113/113 — 100% ]
+  Tests       : 146 passed, 146 total   [ APROVADOS: 146/146 — 100% ]
   Snapshots   : 0 total
   Tempo       : ~0.7 s
 
   META DE COBERTURA (>= 70%): ATINGIDA ✓
     Statements : 100% ≥ 70% ✓
-    Branches   :  96% ≥ 70% ✓
+    Branches   :  98% ≥ 70% ✓
     Functions  : 100% ≥ 70% ✓
     Lines      : 100% ≥ 70% ✓
 

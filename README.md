@@ -138,7 +138,7 @@ O arquivo `.bob/mcp.json` já está configurado para uso local:
 
 ## Testes Automatizados
 
-113 testes unitários, 100% de cobertura de statements e funções.
+146 testes unitários, 100% de cobertura de statements e funções.
 
 ```bash
 cd dio_explorer
@@ -148,10 +148,10 @@ npm test
 
 | Métrica | Resultado |
 |---|---|
-| Testes | 113/113 ✅ |
+| Testes | 146/146 ✅ |
 | Statements | 100% |
 | Functions | 100% |
-| Branches | 96% |
+| Branches | 98.36% |
 | Lines | 100% |
 
 ---
