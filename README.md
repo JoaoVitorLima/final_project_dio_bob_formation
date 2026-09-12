@@ -1,0 +1,185 @@
+# 🚀 DIO Explorer — Projeto Final de Formação IBM Bob
+
+> Projeto desenvolvido durante a **Formação IBM Bob** na [DIO (Digital Innovation One)](https://dio.me).  
+> Demonstra como construir um assistente de IA completo, com comandos customizados, servidor MCP e testes automatizados, usando o **IBM Bob** como plataforma de desenvolvimento.
+
+---
+
+## 📚 Índice
+
+- [Visão Geral](#visão-geral)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Comandos Bob (Slash Commands)](#comandos-bob-slash-commands)
+- [Servidor MCP](#servidor-mcp)
+- [Testes Automatizados](#testes-automatizados)
+- [Como Executar](#como-executar)
+- [Prompts Utilizados na Construção](#prompts-utilizados-na-construção)
+- [Dicas de Uso](#dicas-de-uso)
+- [Insights para Futuros Profissionais](#insights-para-futuros-profissionais)
+
+---
+
+## Visão Geral
+
+O **DIO Explorer** é um assistente inteligente que permite a qualquer usuário do Bob:
+
+| Capacidade | O que faz |
+|---|---|
+| `/trilha <tecnologia>` | Exibe trilha de aprendizado com plano de estudos gerado por IA |
+| `/desafio <tecnologia> <nivel>` | Gera um desafio de código aleatório com template inicial |
+| `/certificado <nome> <trilha>` | Emite certificado fictício de conclusão em Markdown |
+
+Tudo isso está disponível tanto via **comandos slash no Bob** quanto via **servidor MCP** (para integração com outros agentes de IA).
+
+---
+
+## Estrutura do Projeto
+
+```
+dio_explorer/
+├── .bob/
+│   ├── mcp.json              # Configuração do servidor MCP para o Bob
+│   └── commands/
+│       ├── trilha.md         # Prompt do comando /trilha
+│       ├── desafio.md        # Prompt do comando /desafio
+│       └── certificado.md    # Prompt do comando /certificado
+├── commands/                 # Cópia dos comandos (referência)
+├── data/
+│   └── trilhas_dio.json      # Base de dados com trilhas DIO
+├── docs/                     # Documentação detalhada
+├── mcp/
+│   ├── src/index.ts          # Servidor MCP em TypeScript
+│   ├── build/index.js        # Build compilado
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── README.md             # Documentação específica do MCP
+├── src/
+│   ├── dioCommands.js        # Lógica de negócio (Node.js)
+│   ├── dioCommands.test.js   # Testes unitários (Jest)
+│   ├── dio_commands.py       # Implementação alternativa (Python)
+│   └── test_dio_commands.py  # Testes Python
+├── resultados_testes.txt     # Relatório completo dos testes
+└── package.json              # Configuração Jest
+```
+
+---
+
+## Comandos Bob (Slash Commands)
+
+Os comandos estão em `.bob/commands/` e são ativados diretamente no chat do Bob.
+
+### `/trilha <tecnologia>`
+
+```
+/trilha Python
+/trilha JavaScript
+/trilha Java
+```
+
+Busca case-insensitive e sem distinção de acentos. Retorna ficha completa da trilha com plano de estudos gerado pela IA do Bob.
+
+### `/desafio <tecnologia> <nivel>`
+
+```
+/desafio JavaScript intermediário
+/desafio Python avancado
+/desafio Java iniciante
+```
+
+Níveis aceitos: `iniciante`, `intermediário` / `intermediario`, `avançado` / `avancado`.
+
+### `/certificado <seu-nome> <trilha-concluida>`
+
+```
+/certificado "João Silva" Python
+/certificado "Maria Costa" React
+```
+
+Gera certificado em Markdown com dados reais da trilha, data atual, badges e código de verificação único (`DIO-XXXX-XXXX-XXXX`).
+
+---
+
+## Servidor MCP
+
+O servidor MCP expõe as mesmas três ferramentas via protocolo MCP, permitindo integração com qualquer agente compatível (Bob, Claude Desktop, etc.).
+
+### Instalação
+
+```bash
+cd dio_explorer/mcp
+npm install
+npm run build
+```
+
+### Configuração no Bob
+
+O arquivo `.bob/mcp.json` já está configurado para uso local:
+
+```json
+{
+  "mcpServers": {
+    "dio-explorer": {
+      "command": "node",
+      "args": ["caminho/absoluto/para/dio_explorer/mcp/build/index.js"]
+    }
+  }
+}
+```
+
+### Modos de execução
+
+| Modo | Comando | Uso |
+|---|---|---|
+| stdio (local) | `node build/index.js` | Bob / Claude Desktop |
+| HTTP | `TRANSPORT=http PORT=3100 node build/index.js` | APIs / acesso remoto |
+| HTTP com auth | `API_KEY=minha-chave TRANSPORT=http node build/index.js` | Produção segura |
+
+---
+
+## Testes Automatizados
+
+113 testes unitários, 100% de cobertura de statements e funções.
+
+```bash
+cd dio_explorer
+npm install
+npm test
+```
+
+| Métrica | Resultado |
+|---|---|
+| Testes | 113/113 ✅ |
+| Statements | 100% |
+| Functions | 100% |
+| Branches | 96% |
+| Lines | 100% |
+
+---
+
+## Prompts Utilizados na Construção
+
+Consulte o [Guia Completo](dio_explorer/docs/GUIA_COMPLETO.md) para ver todos os prompts usados durante o desenvolvimento do projeto com o IBM Bob.
+
+---
+
+## Dicas de Uso
+
+- Use `/trilha` antes de `/desafio` para conhecer o nível certo para você
+- O certificado funciona mesmo para trilhas não cadastradas — ideal para uso criativo
+- O servidor MCP em modo HTTP pode ser acessado por múltiplos agentes simultaneamente
+- Defina `API_KEY` sempre que expor o servidor em rede pública
+
+---
+
+## Insights para Futuros Profissionais
+
+Consulte o [Guia Completo](dio_explorer/docs/GUIA_COMPLETO.md) para insights detalhados sobre:
+
+- Como pensar em "ferramentas de IA" como produtos reais
+- Engenharia de prompts para comandos robustos
+- Boas práticas em servidores MCP
+- Como testar lógica de IA de forma determinística
+
+---
+
+*Projeto construído com ❤️ durante a Formação IBM Bob na DIO.*
